@@ -1,0 +1,10 @@
+
+populationSize 8
+immigrationSize 5
+mutationRate 0.1
+mutationAmount 0.5
+keepbest 0
+
+output.binary 0
+output.bestonly 1
+
