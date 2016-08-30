@@ -38,7 +38,6 @@ double local_similarity(Power_spectrum *S1, Power_spectrum *S2, double *diag)
 double **create_local_similarity_array(Descriptor *desc_arr,int desc_no,double *diag)
 {
     double **ls_arr = (double **) malloc(desc_no*sizeof(double *));
-    #pragma omp parallel for schedule(dynamic)
     for (int mol_idx=0; mol_idx<desc_no; mol_idx++)
     {
         ls_arr[mol_idx] = (double *) malloc(MAX_TOTAL*sizeof(double));

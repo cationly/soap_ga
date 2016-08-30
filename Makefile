@@ -13,35 +13,20 @@ OBJ = setup.o molecule.o solver.o neighbourhood.o stats.o stratify.o structural_
 COBJ = soap_c_wrap.o
 CDEPS = soap_c_wrap.h
 
-default: all
-
-all: static.exe dynamic.exe
+default: static.exe dynamic.exe
 
 %.o: %.cpp $(DEPS) $(CDEPS)
 	$(CPP) $(CPPFLAGS) $(INCPATH) -c -o $@ $<
 
-mainc.exe: $(OBJ) $(COBJ)  mainc.c
-	$(CC) -c mainc.c -o mainc.o
-	$(CPP) -o $@ $(OBJ) $(COBJ) mainc.o $(LFLAGS)
-
 #static compilation
-static.exe: $(OBJ) $(COBJ) static.c 
-	$(CC) $(CCFLAGS) $(INCPATH) -c static.c
-	mpic++ -O3 -Wall -o static.exe $(OBJ) $(COBJ) static.o ~/lib/libga.a $(LFLAGS)
+static.exe: static.c $(OBJ) $(COBJ)
+	$(CC) $(CCFLAGS) $(INCPATH) -c $<
+	mpic++ $(CPPFLAGS) -o $@ $(OBJ) $(COBJ) static.o ~/lib/libga.a $(LFLAGS)
 
-dynamic.exe: static.c 
-	$(CC) $(CCFLAGS) $(INCPATH) -c static.c
-	mpic++ -O3 -Wall -o dynamic.exe $(OBJ) $(COBJ) static.o $(LFLAGS) -L../ -lga
+dynamic.exe: static.c $(OBJ) $(COBJ)
+	$(CC) $(CCFLAGS) $(INCPATH) -c $<
+	mpic++ $(CPPFLAGS) -o $@ $(OBJ) $(COBJ) static.o $(LFLAGS) -L../ -lga
 
 clean:
 	rm -rf *.o *.exe
-
-
-
-
-
-
-
-
-
 

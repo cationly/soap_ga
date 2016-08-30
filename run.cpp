@@ -39,7 +39,6 @@ Stats run(Dataset *dset, Params params)
 #endif // VERBOSE
     /* cross structural similarity */
     bnu::matrix<double> K(train_no,train_no);
-    #pragma omp parallel for schedule(dynamic)
     for (int i=0; i<train_no; i++)
     {
         K(i,i) = 1.0;
@@ -57,7 +56,6 @@ Stats run(Dataset *dset, Params params)
     std::cout << "validation matrix..." << std::endl;
 #endif // VERBOSE
     bnu::matrix<double> L(train_no,validate_no);
-    #pragma omp parallel for schedule(dynamic)
     for (int i=0; i<train_no; i++)
     {
         for (int j=0; j<validate_no; j++)
